@@ -31,7 +31,7 @@ $
 $
 Then by #eref(<eq:multiple-lr-var>) we have 
 $
-  Var(hat(beta)_j) = sigma^2 (X_(dot,k)^T X_(dot,k))^(-1) 1 / (1 - R^2_k) med,
+  Var(hat(beta)_k) = sigma^2 (X_(dot,k)^T X_(dot,k))^(-1) 1 / (1 - R^2_k) med,
 $
 where 
 $X_(dot,k)$ is the $k$-th column of $X$ and $R^2_k$ is the R-squared obtained by regressing the $k$-th regressor on all the other regressors.
