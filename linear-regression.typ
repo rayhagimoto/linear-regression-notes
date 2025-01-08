@@ -1,20 +1,6 @@
-#import "@preview/physica:0.9.4"
-#import "/global-templates/lib.typ" : *
-#import "/global-templates/template.typ" : *
-
-#show: template
-
-// Macros
-#let xbar = $overline(x)$
-#let ybar = $overline(y)$
-
-// Document
-#make-title("Linear Regression")
-
-#block(width:100%)[
-  #set quote(block: true)
-  #quote(attribution: [Albert Einstein])["Everything should be made as simple as possible, but not simpler."]
-]
+#import "@preview/physica:0.9.4" : *
+#import "@local/templates:1.0.0" : *
+#import "utils.typ" : *
 
 = Introduction
 
@@ -168,7 +154,7 @@ Suppose we want to use $p$ covariates to predict the variate $y$. We can write d
 $
   y_i = beta_0 + sum_(k=1)^p x_(k,i) beta_k  + epsilon_k "for" i = 1, 2, dots, N. #<eq:multiple-lr-model>
 $
-Or, if we define $X in RR^(N times (p + 1))$  as the matrix 
+It's conventional to define the so-called _design matrix_ $X in RR^(N times (p + 1))$  as 
 $
   X equiv mat(
     1, x_(1,1), x_(2,1), dots, x_(N,1);
@@ -189,8 +175,10 @@ $ <eq:multiple-lr-est>]
 Its variance-covariance matrix is #footnote[this can be easily derived by using the identity $Var(A x) = A Var(x) A^T$, and using the assumption of homoscedasticity to write $Var(epsilon) = sigma^2 bb(1)_(p+1)$.]\
 #bluebox[
 $
-  Var(beta) = sigma^2 X^T X med .
-$ <eq:multiple-lr-var>]
+  Var(beta) = sigma^2 (X^T X)^(-1) med . #<eq:multiple-lr-var>
+$ 
+] 
+
 
 == Assumptions
 
@@ -248,60 +236,3 @@ $
 To go from #eref(<eq:gauss-markov-4c>) to #eref(<eq:gauss-markov-4d>) I eliminated the cross terms in the middle via the fact that $C X = 0$ and rewrote the first term using #eref(<eq:multiple-lr-var>).
 Since $C$ is a positive semi-definite matrix we have shown that $Var(tilde(beta))$ exceeds $Var(hat(beta))$ by a positive semi-definite matrix
 #footnote[To verify that $C C^T$ is positive semi-definite simply write $v = C^T x$, then for any $x$ $abs(v)^2 = x^T C C^T x >= 0.$], $sigma^2 C C^T$.
-
-
-
-= Consequences of violating Gauss Markov assumptions
-
-
-== Weak exogeneity
-
-Some terms:
-#defenv[
-  _Exogeneity_ is the assumption that measurement errors are uncorrelated with the covariate $x$. In other words, $Cov(x,epsilon) = 0.$ We often write $EE[epsilon|x] = 0$
-]
-#defenv[
-  _Endogeneity_ refers to the errors in measurement of $Y$ being correlated with measurements of $x$. 
-]
-
-In this section we consider the single-variable model in #eref(<eq:reg-model>).
-We have assumed that there are no errors in our observations of the covariate $x$, but it's possible there actually are errors. If we naiively use the OLS estimator for $hat(beta)$ how does the estimate relate to the true value?
-Violation of weak exogeneity is sometimes referred to as errors-in-variables.
-In OLS regression it leads to _attenuation bias_, where $hat(beta)$ becomes biased towards 0. 
-
-First, let's arrive at the effect using intuition. The OLS estimator for  $beta$ is  $S_(x y) slash S_x$.
-If there are no errors in the measurement of $x$ then the only thing obscuring our ability to see the true covariance between $x$ and $y$ are the errors in $y$ that we assume in OLS regression.
-Adding errors to $x$ has the effect of reducing the observed covariance between $x$ and $y$, so we should expect that if we use the OLS estimator in this case, our estimate would be biased towards zero than the same estimator when used in the case when there are no errors in $x$.
-
-Now some maths. Denote the true value of $x$ by $x^*$ and let the error in measurements of $x_*$ be $eta$.
-The model is given by taking #eref(<eq:reg-model>) and replacing $x -> x_*$,
-$
-  y = beta_0 + x_* beta_1 + epsilon med ,
-$
-but since we can only measure $x = x_* + eta$ we have, in practice,
-$
-  y &= beta_0 + (x - eta) beta_1 + epsilon med #no-num \
-  &= beta_0 + x beta_1 + (epsilon - beta_1 eta) \ 
-  &equiv beta_0 + x beta_1 + tilde(epsilon) med,
-$
-where $tilde(epsilon) = epsilon - beta_1 eta$ is identified as the "new" residual, which is now correlated with $x$. 
-The OLS estimator for $beta_1$ then converges to
-$
-  hat(beta)_1 = (sum_i (x_i - xbar)(y_i - ybar)) / (sum_i (x_i - xbar)^2) arrow Cov(x,y) / Var(x) = (sigma_(x_*)^2) / (sigma_(x_*)^2 + sigma_eta^2) thin beta_1,
-$
-which is less than or equal to $beta_1$. This effect is called _attenuation damping_. 
-In deriving this expression I used the fact that we condition on the observed $x$ but are uncertain about the true value $x_*$ and the noise $eta$.
-We have,
-$
-  Cov(x,y) 
-  &= Cov(x_* + eta, beta_0 + beta_1 x_* + epsilon) #no-num \
-  &= Cov(x_*, beta_1, x_*) + Cov(eta, beta_1 x_*) + Cov(eta, epsilon) #no-num \
-  &= beta_1 Var(x_*) + 0 + 0 equiv beta_1 sigma^2_(x*) #no-num
-$
-
-
-_Note:_ The first time I encountered this I was very confused about the meaning of $Cov(x,y)$ because I had the perspective that $x$ is not a random variable and $y$ is. 
-
-
-
-#bibliography("ref.bib", title:"References")
