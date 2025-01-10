@@ -28,8 +28,13 @@
 
 // Main contents
 #include "linear-regression.typ"
+
+// Broken assumptions
 #include "broken-assumptions/weak-exogeneity.typ"
 #include "broken-assumptions/multicollinearity.typ"
+
+// Time series analysis
+#include "time-series-analysis/time-series.typ"
 
 // References
 #bibliography("ref.bib", title:"References")

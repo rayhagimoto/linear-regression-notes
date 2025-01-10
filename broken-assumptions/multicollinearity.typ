@@ -3,7 +3,15 @@
 
 == Multicollinearity
 
-This topic is a favourite in quant finance interviews. 
+#red[
+  _Note:_ My understanding of the maths of this section are fuzzy.
+  I was following #link("https://www.statlect.com/glossary/variance-inflation-factor")[#underline[these notes]] for much of this section, but it seems like they do not include the constant $beta_0$ term in their regression model. 
+  Of course, this can be achieved by standardising the target and the covariates e.g. $y -> y - ybar$, $x_i -> x_i - xbar_i$.
+  Wikipedia suggests that the formulas here still stand up when you include $beta_0$. 
+  In particular, in the expression below make the replacement $(X^T X)^(-1) -> [sum (x - xbar)^2]^(-1)$ to get Wikipedia's expression.
+]
+
+This topic is a favourite in quant finance interviews.  
 Multicollinearity means that two or more variables are linearly dependent (in practice, approximately linearly dependent) so that the covariance matrix $X^T X$ becomes (approximately) singular and some of the regression parameter estimates are undefined (blow up).
 
 The most significant consequence of multicollinearity is _variance inflation_. 
@@ -35,4 +43,15 @@ $
 $
 where 
 $X_(dot,k)$ is the $k$-th column of $X$ and $R^2_k$ is the R-squared obtained by regressing the $k$-th regressor on all the other regressors.
+The rightmost factor is known as the _variance inflation factor (VIF)_ and it's important enough that I'll enshrine it in a blue box. 
+#bluebox[
+  $
+    "VIF"_k = 1 / (1 - R^2_k)
+  $
+]
+Clearly, if $R^2_k approx 1$, then the variance will be large. 
+The important thing is that the VIF characterises how much of $x_k$ can be explained by the other variables. 
+If most of it can, then $x_k$ may be worth removing.
+
+
 

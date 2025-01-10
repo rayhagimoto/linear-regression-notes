@@ -140,9 +140,10 @@ $
 $
 where $hat(sigma)$ is the estimator for the standard deviation of the residuals and is given by
 $
-  hat(sigma) = sum_i (y_i - hat(beta)_0 - hat(beta)_1 x_i )^2 med .
+  hat(sigma)^2 = 1 / (n-1) sum_i (y_i - hat(beta)_0 - hat(beta)_1 x_i )^2 med .
 $
-If the $epsilon_i$ are assumed to (1) be Gaussian with mean zero (2) have no autocorrelation (3) exhibit weak exogeneity, then the $t$-statistic follows a $t$ distribution which can be used to calculate $p$-values for significance testing. 
+If the $epsilon_i$ are assumed to (1) be Gaussian with mean zero (2) have no autocorrelation (3) exhibit weak exogeneity, then the $t$-statistic follows a $t$ distribution with $n - p$ degrees of freedom. 
+This can be used to calculate $p$-values for significance testing. 
 However, if any of these assumptions are violated you can't use the standard $p$-values. 
 This happens basically all the time in financial time series analysis where, for example, you may model the next time step $y_t$ as a linear combination of lagged values.
 This introduces autocorrelation in the residuals.
@@ -154,7 +155,7 @@ Suppose we want to use $p$ covariates to predict the variate $y$. We can write d
 $
   y_i = beta_0 + sum_(k=1)^p x_(k,i) beta_k  + epsilon_k "for" i = 1, 2, dots, N. #<eq:multiple-lr-model>
 $
-It's conventional to define the so-called _design matrix_ $X in RR^(N times (p + 1))$  as 
+It's conventional to define the so-called _design matrix_ $X in RR^(N times (p + 1))$ as#footnote[In the literature I mostly see people saying the design matrix is $N times p$]
 $
   X equiv mat(
     1, x_(1,1), x_(2,1), dots, x_(N,1);
