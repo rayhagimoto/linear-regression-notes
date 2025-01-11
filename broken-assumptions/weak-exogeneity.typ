@@ -13,6 +13,37 @@ Some terms:
   _Endogeneity_ refers to the errors in measurement of $Y$ being correlated with measurements of $x$. 
 ]
 
+The primary issue associated with violation of weak exogeneity in linear regression models is _bias_. 
+The OLS estimator $hat(beta)$ no longer satisfies $EE(hat(beta)) = beta$. 
+Endogeneity arises due to three main reasons:
++ Omitted variable (this is a type of model misspecification, so it also violates OL8.)
++ Errors in measurement of the covariate
++ Reverse causality
+
+_Omitted variable bias_ 
+
+Imagine the true data generating model is given by 
+$
+  y = beta_0 + beta_1 x_1 + beta_2 x_2 + epsilon med ,
+$
+and further suppose $x_1$ and $x_2$ are correlated so that (but not perfectly colinear) $Cov(x_1, x_2) equiv rho sigma_1 sigma_2$, where $sigma_i equiv Var(x_i)$.
+If we mistakenly assume a model of the form
+$
+  y = tilde(beta)_0 + tilde(beta)_1 x_1 + epsilon med , \
+  beta_0 + beta_1 x_1 + beta_2 x_2 + epsilon = tilde(beta)_0 + tilde(beta)_1 x_1 + tilde(epsilon) med ,
+$
+$
+  => tilde(epsilon) = epsilon + beta_2 x_2 \
+  => Cov(x_1, tilde(epsilon)) = Cov(x_1, epsilon) + beta_2 Cov(x_1, x_2) != 0 med .
+$
+$
+  hat(beta)_1 
+  &= Cov(x_1, y) / Var(x_1) -> (tilde(beta)_1 Var(x_1) + Cov(x_1, tilde(epsilon))) / Var(x_1) \
+  &= tilde(beta)_1 + Cov(x_1, tilde(epsilon)) / Var(x_1) \
+  &= tilde(beta)_1 + quad #box(outset:0.5em, stroke:cyan)[$rho thin beta_2 thin sigma_2 / sigma_1$] quad .
+$
+The expression in the box is the bias.
+
 In this section we consider the single-variable model in #eref(<eq:reg-model>).
 We have assumed that there are no errors in our observations of the covariate $x$, but it's possible there actually are errors. If we naiively use the OLS estimator for $hat(beta)$ how does the estimate relate to the true value?
 Violation of weak exogeneity is sometimes referred to as errors-in-variables.

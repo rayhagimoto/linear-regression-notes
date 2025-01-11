@@ -35,11 +35,14 @@ _Variance inflation factor_
 
 Start with #eref(<eq:multiple-lr-var>) (repeated below for convenience)
 $
-  Var(hat(beta)) = sigma^2 (X^T X)^(-1) #no-num 
+  Var(hat(beta)) = sigma^2 (X^T X)^(-1) #no-num \
+  hat(Var)(hat(beta)) = hat(sigma)^2 (X^T X)^(-1) med . #no-num 
 $
 Then by #eref(<eq:multiple-lr-var>) we have 
 $
-  Var(hat(beta)_k) = sigma^2 (X_(dot,k)^T X_(dot,k))^(-1) 1 / (1 - R^2_k) med,
+  Var(hat(beta)_k) 
+  &= sigma^2 (X_(dot,k)^T X_(dot,k))^(-1) 1 / (1 - R^2_k) med, \
+  hat(Var)(hat(beta)) &= hat(sigma)^2 / ((n-1) hat(Var)(X_k)) 1 / (1 - R^2_k) med, \
 $
 where 
 $X_(dot,k)$ is the $k$-th column of $X$ and $R^2_k$ is the R-squared obtained by regressing the $k$-th regressor on all the other regressors.
