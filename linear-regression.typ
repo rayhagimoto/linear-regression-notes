@@ -170,14 +170,16 @@ which exactly matches #eref(<eq:slr-var-beta1>).
 == Signifcance testing
 
 The linear correlation between $x$ and $y$ is typically assessed via the $t$-statistic,
-$
-  hat(t) = hat(beta)_1 / (hat(sigma) slash S_(x x) ) med ,
-$
+#bluebox[
+  $
+    hat(t) = hat(beta)_1 / Var(hat(beta)_1) =  hat(beta)_1 / (hat(sigma) slash S_(x x) ) med ,
+  $
+]
 where $hat(sigma)$ is the estimator for the standard deviation of the residuals and is given by
 $
   hat(sigma)^2 = 1 / (n-1) sum_i (y_i - hat(beta)_0 - hat(beta)_1 x_i )^2 med .
 $
-If the $epsilon_i$ are assumed to (1) be Gaussian with mean zero (2) have no autocorrelation (3) exhibit weak exogeneity, then the $t$-statistic follows a $t$ distribution with $n - p$ degrees of freedom. 
+If the $epsilon_i$ are assumed to (1) be *Gaussian* with mean zero (2) have *no autocorrelation* (3) exhibit *weak exogeneity*, then the $t$-statistic follows a #box(fill:cyan)[$t$ distribution with $n - p$ degrees of freedom]. 
 This can be used to calculate $p$-values for significance testing.
 However, if any of these assumptions are violated you can't use the standard $p$-values. 
 This happens basically all the time in financial time series analysis where, for example, you may model the next time step $y_t$ as a linear combination of lagged values.

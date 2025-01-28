@@ -30,6 +30,9 @@
 #include "linear-regression.typ"
 
 // Broken assumptions
+= Consequences of violating Gauss Markov assumptions
+
+#include "broken-assumptions/homoscedasticity.typ"
 #include "broken-assumptions/weak-exogeneity.typ"
 #include "broken-assumptions/multicollinearity.typ"
 

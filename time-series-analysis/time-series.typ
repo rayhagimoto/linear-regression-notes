@@ -20,19 +20,23 @@ To explain this test let's look at a simple example of a linear time series.
 
 == AR(2) model
 
+The AR(2) model for $r_t$ is defined as
 $
-  r_t = phi_0 + phi_1 r_(t-1) + phi_2 r_(t-2) + epsilon_t
+  r_t = phi_0 + phi_1 r_(t-1) + phi_2 r_(t-2) + epsilon_t med .
 $
+Assuming weak stationarity we can derive the mean $EE[r_t]$ as
 $
   EE[r_t] 
   &= phi_0 + phi_1 EE[r_(t-1)] + phi_2 EE[r_(t-2)] + EE[epsilon_t] \
   => mu &=  phi_0 + phi_1 mu + phi_2 mu \
   => mu &= phi_0 / (1 - phi_1 - phi_2) med .
 $
-Rewriting the time series (in terms of deviations from the mean):
+Next we can compute its autocovariance and autocorrelation functions. 
+Rewriting the time series (in terms of deviations from the mean) we get
 $
   r_t - mu = phi_1 (r_(t-1) - mu) + phi_2 (r_(t-2) - mu) + epsilon_t med .
 $
+Now we multiply this by the lagged values on both sides:
 $
   (r_(t - ell) - mu)(r_t - mu) = phi_1 (r_(t - ell)- mu)(r_(t-1) - mu) + phi_2 (r_(t - ell) - mu)(r_(t-2) - mu) + epsilon_t
 $
@@ -41,13 +45,18 @@ $
   EE[(r_(t - ell) - mu)(r_t - mu)] 
   &= phi_1 EE[(r_(t - ell)- mu)(r_(t-1) - mu)] #no-num \
   &quad + phi_2 EE[(r_(t - ell) - mu)(r_(t-2) - mu)] + EE[epsilon_t] #no-num \
+$
+Apply stationarity to the expectation values,
+$
   => gamma_ell &= phi_1 gamma_(ell - 1) + phi_2 gamma_(ell - 2) med . #<eq:autocovf-recursion>
 $
-Divide #eref(<eq:autocovf-recursion>) by $gamma_0$ to convert to autocorrelation function.
+Divide #eref(<eq:autocovf-recursion>) by $sqrt(Var(r_(t-ell))Var(r_(t))) = Var(r_t) = gamma_0$ to convert to autocorrelation function.
 $
   rho_ell &= phi_1 rho_(ell - 1) + phi_2 rho_(ell - 2) med .
 $
-Can be written as a second-order difference equation
+This gives us a second order recursive relation for the autocorrelation function. 
+It's a second-order difference equation.
+Introducing the lag operator $L rho_ell equiv rho_(ell - 1)$ we can write this as,
 $
   (1 - phi_1 L - phi_2 L^2) rho_ell = 0 med . #<eq:ar2-diff>
 $
@@ -63,15 +72,7 @@ $
   z^2 - phi_1 z - phi_2 = 0 med .
 $
 Roots of this polynomial determine the asymptotic properties of the autocovariance.
-
-// There is an intimate connection between equations like #eref(<eq:ar2-diff>) and stability of finite difference schemes in numerical differential equation solvers. 
-// For example, consider the forward Euler method for solving the differential equation $y'(t) = alpha y(t)$ given $y(0) = y_0$.
-// The Euler method approximates each time step by
-// $
-//   y_n = y_(n-1) + alpha y_(n-1) h 
-//   &= (1 + alpha h) y_(n-1) \
-//   &= (1 + alpha h)^n y_0
-// $
+The presence of a unit root implies $rho_ell$ grows exponentially with $ell$.
 
 
 == AR(p) model

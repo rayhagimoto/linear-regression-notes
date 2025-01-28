@@ -1,7 +1,6 @@
 #import "@local/templates:1.0.0" : *
 #import "/utils.typ" : *
 
-= Consequences of violating Gauss Markov assumptions
 
 == Weak exogeneity
 
@@ -81,3 +80,16 @@ $
 
 
 _Note:_ The first time I encountered this I was very confused about the meaning of $Cov(x,y)$ because I had the perspective that $x$ is not a random variable and $y$ is. 
+From the perspective of these notes we have assumed that $(x,y)$ are drawn from a distribution $f(x,y)$ since the beginning. 
+This framework is natural in econometrics where you may have two time series $X_t$ and $Y_t$ which may both not be "control" variables.
+On the other hand, in experimental physics we may have more control over $X$ (for example, it could be the length of a wire, which we can choose with good precision).
+Even this deterministic sampling of $X$ can be modeled probabilistically, e.g. with Dirac deltas.
+
+=== Diagnosing weak exogeneity
+
++ Look at the residuals as a function of the features, or the prediction. Is there a trend? Residuals should be 0-centered.
+
+#red[
+  *Need to add:*
+  + Reverse causality explanation
+]
