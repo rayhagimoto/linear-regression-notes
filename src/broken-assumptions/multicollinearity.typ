@@ -1,5 +1,5 @@
 #import "@local/templates:1.0.0" : *
-#import "/utils.typ" : *
+#import "../utils.typ" : *
 
 == Multicollinearity
 

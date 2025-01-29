@@ -1,5 +1,5 @@
 #import "@local/templates:1.0.0" : *
-#import "/utils.typ" : *
+#import "../utils.typ" : *
 
 
 == Weak exogeneity
@@ -15,9 +15,9 @@ Some terms:
 The primary issue associated with violation of weak exogeneity in linear regression models is _bias_. 
 The OLS estimator $hat(beta)$ no longer satisfies $EE(hat(beta)) = beta$. 
 Endogeneity arises due to three main reasons:
-+ Omitted variable (this is a type of model misspecification, so it also violates OL8.)
-+ Errors in measurement of the covariate
-+ Reverse causality
++ *Omitted variable* (this is a type of model misspecification, so it also violates OL8.)
++ *Errors in measurement of the covariate*
++ *Reverse causality*
 
 _Omitted variable bias_ 
 
@@ -42,6 +42,13 @@ $
   &= tilde(beta)_1 + quad #box(outset:0.5em, stroke:cyan)[$rho thin beta_2 thin sigma_2 / sigma_1$] quad .
 $
 The expression in the box is the bias.
+
+#figure(
+  image("figs/weak_exogeneity_example.svg"),
+  caption:[
+    Demonstration of attenuation bias as a result of not accounting for errors in the covariate $x$. 
+  ]
+)
 
 In this section we consider the single-variable model in #eref(<eq:reg-model>).
 We have assumed that there are no errors in our observations of the covariate $x$, but it's possible there actually are errors. If we naiively use the OLS estimator for $hat(beta)$ how does the estimate relate to the true value?
