@@ -1,0 +1,14 @@
+name: ols_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - matplotlib
+  - statsmodels
+  - scipy
+  - jupyter
+  - ipykernel
+variables:
+  PYTHONPATH: "/home/ray/typst/linear-regression-notes/scripts/case_studies/ols_violations/ols_violations"

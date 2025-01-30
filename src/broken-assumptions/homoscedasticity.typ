@@ -40,6 +40,28 @@ If we have reason to believe that the errors are dependent on $X$ one can fit an
 This might seem to violate the assumption of weak exogeneity, but this is not necessarily the case. 
 You could have $sigma^2 = sigma^2(X)$ without violating $EE[epsilon|X] = 0$.
 
+=== WLS Example
+
+Consider the following setup:
+$
+  x ~ U(1, 5) quad 
+  epsilon|x ~ "LogNorm"(0, 1 / 4 x^2) \
+  y|x,epsilon = beta x + epsilon med .
+$
+That is, the error term is explicitly dependent on $x$. 
+In this model $EE[epsilon|x] = exp(1/4 x^2) != 0$ so weak exogeneity is also violated.
+
+#figure(
+  image("figs/homoscedasticity/beta-hist.svg")
+)
+#figure(
+  image("figs/homoscedasticity/trendlines.svg")
+)
+
+
+
+
+
 #red[
   *Need to add:*
   + Diagnosing heteroscedasticity (look at residuals vs predictions/vs each feature)

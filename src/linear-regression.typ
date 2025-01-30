@@ -79,7 +79,9 @@ $
 This is an important result. 
 It tells us that even if we have _infinite data_ and an _arbitrarily flexible model_, *the best we can do by minimising a least-squares loss is to learn the conditional expectation of $y$ given $x$*.
 
-_Note: A really nice reference for the content in this section is the introduction of ref._ @bishop1994mixture.
+#align(center)[
+  _Note: A really nice reference for the content in this section is the  introduction of ref._ @bishop1994mixture.
+]
 
 == OLS estimators
 
@@ -88,22 +90,28 @@ The results are simply,
 
 #bluebox[
 $
-  hat(beta)_1 &= (sum_i (x_i - xbar)(y_i - ybar)) / (sum_i (x_i - xbar^&)^2) = S_(x y) / S_(x x) = rho_(x y) S_(y y) / S_(x x), #<eq:beta-0-est> \
+  hat(beta)_1 &= (sum_i (x_i - xbar)(y_i - ybar)) / (sum_i (x_i - xbar^&)^2) = S_(x y)^2 / S_x^2 = rho_(x y) S_y / S_x, #<eq:beta-0-est> \
   
   hat(beta)_0 &= ybar - hat(beta)_1 xbar med, #<eq:beta-1-est> 
 $
 ]
 where I have introduced the estimators for standard error $S$ and correlation $rho$,
 $
-  S_(x y)^2 equiv 1 / (n-1) sum_i (x_i - xbar)(y_i - ybar) \ 
-  rho_(x y) equiv S_(x y) / (S_(x x) S_(y y)) med ,
+  S_(x y)^2 &equiv 1 / (N-1) sum_i (x_i - xbar)(y_i - ybar) \ 
+  S_(x)^2 &equiv 1 / (N-1) sum_i (x_i - xbar)^2 \
+  rho_(x y) &equiv S_(x y)^2  / (S_x S_y) med , \
+
 $
 and overlines denote sample means, e.g. $xbar = 1 / N sum_(i=1)^N x_i$.
 
 == Properties of estimators 
 
-_Unbiasedness_\
-When conditioned on $x$ we can show the estimators are unbiased. In the following when I write $EE(y)$ I mean the expectation of $y$ conditioned on $x$. Moreover, the expectation of any arbitrary function of $x = (x_1, x_2, dots, x_N)$ is itself when conditioned on $x$.
+_*Bias*_
+
+The first property of the OLS estimators is that they are _unbiased_, when we condition on $x$. 
+This can be shown with a straightforward calculation that I will carry out below.
+Note that in the following all expectation values are _conditional on $x$_. Hence, when I write $EE(y)$ I really mean $EE[y|x]$ (the expectation of $y$ conditioned on $x$). 
+This implies that, the expectation of any arbitrary function of $x = (x_1, x_2, dots, x_N)$ is itself when conditioned on $x$, e.g. $EE[norm(x)^2] = norm(x)^2$.
 
 First, let's evaluate the expectation of $hat(beta)_1$. We have,
 $
@@ -123,7 +131,7 @@ $
   EE hat(beta)_0 = EE ybar - xbar thin EE hat(beta)_1 = beta_0 + beta_1 xbar - xbar hat(beta)_1 = beta_0 med .
 $
 
-_Variance_\
+*_Variance_*\
 
 I'll present the formulas for quick reference then derive the formula for $Var(hat(beta)_1)$.
 
@@ -169,10 +177,10 @@ which exactly matches #eref(<eq:slr-var-beta1>).
 
 == Signifcance testing
 
-The linear correlation between $x$ and $y$ is typically assessed via the $t$-statistic,
+The linear correlation between $x$ and $y$ is typically assessed via the $t$-statistic,\
 #bluebox[
   $
-    hat(t) = hat(beta)_1 / Var(hat(beta)_1) =  hat(beta)_1 / (hat(sigma) slash S_(x x) ) med ,
+    hat(t) = hat(beta)_1 / Var(hat(beta)_1) =  hat(beta)_1 / (hat(sigma) slash S_x ) med ,
   $
 ]
 where $hat(sigma)$ is the estimator for the standard deviation of the residuals and is given by
@@ -185,6 +193,22 @@ However, if any of these assumptions are violated you can't use the standard $p$
 This happens basically all the time in financial time series analysis where, for example, you may model the next time step $y_t$ as a linear combination of lagged values.
 This introduces autocorrelation in the residuals.
 The Dickey-Fuller test takes this into account when calculating $p$-values for the presence of a unit root.
+
+== $t$-test
+
+Let's explore the $t$-statistics properties in more detail.
+Under the model given in #eref(<eq:reg-model>) we are assuming that the observed values of $y$ fluctuate around the 'true trend' $beta x$ due to Gaussian noise
+#footnote[#eref(<eq:reg-model>) doesn't require the noise to be Gaussian, but this is the most common assumption. ]
+.
+If there is no relationship between $x$ and $y$, then under #eref(<eq:reg-model>) this means $beta = 0$.
+However, even if $beta = 0$ our OLS estimate of $beta$, $hat(beta)$ will generally be nonzero in a given sample.
+The question is how do we determine if an obtained nonzero $hat(beta)$ is statistically significant?
+Assume the null hypothesis $beta = 0$ and $epsilon ~ N(0, sigma^2)$.
+Then,
+$
+  hat(beta) = (X^T X)^(-1)X^T y ~ 
+$
+
 
 == Multiple regressors 
 <sec:multiple-regressors>
