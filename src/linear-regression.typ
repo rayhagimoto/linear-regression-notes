@@ -92,17 +92,20 @@ The results are simply,
 $
   hat(beta)_1 &= (sum_i (x_i - xbar)(y_i - ybar)) / (sum_i (x_i - xbar^&)^2) = S_(x y)^2 / S_x^2 = rho_(x y) S_y / S_x, #<eq:beta-0-est> \
   
-  hat(beta)_0 &= ybar - hat(beta)_1 xbar med, #<eq:beta-1-est> 
+  hat(beta)_0 &= ybar - hat(beta)_1 xbar med . #<eq:beta-1-est> 
 $
 ]
-where I have introduced the estimators for standard error $S$ and correlation $rho$,
+In #eref(<eq:beta-0-est>) I have introduced the estimators for standard error $S$ and correlation $rho$,
 $
-  S_(x y)^2 &equiv 1 / (N-1) sum_i (x_i - xbar)(y_i - ybar) \ 
-  S_(x)^2 &equiv 1 / (N-1) sum_i (x_i - xbar)^2 \
+  S_(x y)^2 &equiv 1 / (N-k) sum_i (x_i - xbar)(y_i - ybar) \ 
+  S_(x)^2 &equiv 1 / (N-p) sum_i (x_i - xbar)^2 \
   rho_(x y) &equiv S_(x y)^2  / (S_x S_y) med , \
 
 $
-and overlines denote sample means, e.g. $xbar = 1 / N sum_(i=1)^N x_i$.
+where $k$ is the number of degrees of freedom. 
+If we regress on both $beta_0$ and $beta_1$ then $k=2$. 
+If we omit $beta_0$ (i.e. assume it is zero), then $k = 1$. 
+Overlines denote sample means, e.g. $xbar = 1 / N sum_(i=1)^N x_i$.
 
 == Properties of estimators 
 
@@ -138,7 +141,7 @@ I'll present the formulas for quick reference then derive the formula for $Var(h
 #bluebox[
 $
   Var(hat(beta)_1) = sigma^2 / (sum_i (x_i - xbar)^2) #<eq:slr-var-beta1> \
-  Var(hat(beta)_0) = (sigma^2 sum_i x_i^2) / (n sum_i (x_i - xbar)^2) #<eq:slr-var-beta0>
+  Var(hat(beta)_0) = (sigma^2 sum_i x_i^2) / (N sum_i (x_i - xbar)^2) #<eq:slr-var-beta0>
 $
 ]
 
@@ -175,39 +178,64 @@ $
 which exactly matches #eref(<eq:slr-var-beta1>).
 
 
-== Signifcance testing
+== Significance testing
 
 The linear correlation between $x$ and $y$ is typically assessed via the $t$-statistic,\
 #bluebox[
   $
-    hat(t) = hat(beta)_1 / Var(hat(beta)_1) =  hat(beta)_1 / (hat(sigma) slash S_x ) med ,
+    hat(t) = hat(beta)_1 / "StdErr"(hat(beta)_1) =  hat(beta)_1 / sqrt(hat(sigma)^2 slash S_x^2 ) med ,
   $
 ]
 where $hat(sigma)$ is the estimator for the standard deviation of the residuals and is given by
 $
-  hat(sigma)^2 = 1 / (n-1) sum_i (y_i - hat(beta)_0 - hat(beta)_1 x_i )^2 med .
+  hat(sigma)^2 = 1 / (N-k) sum_i (y_i - hat(beta)_0 - hat(beta)_1 x_i )^2 med .
 $
-If the $epsilon_i$ are assumed to (1) be *Gaussian* with mean zero (2) have *no autocorrelation* (3) exhibit *weak exogeneity*, then the $t$-statistic follows a #box(fill:cyan)[$t$ distribution with $n - p$ degrees of freedom]. 
+If the $epsilon_i$ are assumed to (1) be *Gaussian* with mean zero (2) have *no autocorrelation* (3) exhibit *weak exogeneity*, then the $t$-statistic follows a #box(fill:cyan)[$t$ distribution with $N - k$ degrees of freedom]. 
 This can be used to calculate $p$-values for significance testing.
 However, if any of these assumptions are violated you can't use the standard $p$-values. 
 This happens basically all the time in financial time series analysis where, for example, you may model the next time step $y_t$ as a linear combination of lagged values.
 This introduces autocorrelation in the residuals.
 The Dickey-Fuller test takes this into account when calculating $p$-values for the presence of a unit root.
 
-== $t$-test
+=== $t$-test
 
 Let's explore the $t$-statistics properties in more detail.
-Under the model given in #eref(<eq:reg-model>) we are assuming that the observed values of $y$ fluctuate around the 'true trend' $beta x$ due to Gaussian noise
+First let's discuss the distribution from which $hat(beta)_1$ is drawn under the null hypothesis $beta_1 = 0$ and argue that $hat(t)$ indeed follows a t-distribution.
+
+The $t$-distribution with $k$ degrees of freedom arises when you divide a standard normal random variable by a $chi^2_k$ random variable, normalised so its mean is 1. I.e.,
+$
+  Z ~ N(0, 1), quad X^2 ~ chi^2_k => Z / sqrt(X^2 slash k) ~ t_k med . #<eq:t-dist-def>
+$
+
+Under the model given in #eref(<eq:reg-model>) we are assuming that the observed values of $y$ fluctuate around the 'true trend' $beta_1 x$ due to Gaussian noise
 #footnote[#eref(<eq:reg-model>) doesn't require the noise to be Gaussian, but this is the most common assumption. ]
 .
-If there is no relationship between $x$ and $y$, then under #eref(<eq:reg-model>) this means $beta = 0$.
-However, even if $beta = 0$ our OLS estimate of $beta$, $hat(beta)$ will generally be nonzero in a given sample.
-The question is how do we determine if an obtained nonzero $hat(beta)$ is statistically significant?
-Assume the null hypothesis $beta = 0$ and $epsilon ~ N(0, sigma^2)$.
+If there is no relationship between $x$ and $y$, then under #eref(<eq:reg-model>) this means $beta_1 = 0$.
+However, even if $beta_1 = 0$ our OLS estimate $hat(beta)_1$ will generally be nonzero in a given sample.
+The question is how do we determine if an obtained nonzero $hat(beta)_1$ is statistically significant?
+Assume the null hypothesis $beta_1 = 0$ and $epsilon ~ N(0, sigma^2)$.
+Since $hat(beta)_1$ is a linear combination of the elements of $y = epsilon$, which are normally distributed with mean 0 and variance $sigma^2$, $hat(beta)_1$ must also be normally distributed with mean 0 -- and we already know its variance from #eref(<eq:slr-var-beta1>).
+So $hat(beta)_1 / sqrt(Var(hat(beta)_1)) ~ N(0, 1)$.
+Meanwhile, roughly speaking we can write 
+$
+  1 / sigma^2 sum_i (y_i - hat(y)_i)^2 equiv 1 / sigma^2 sum_i hat(epsilon)_i^2 ~ chi^2_(N-k)
+$
+so that $hat(sigma)^2 = 1 / (N - k) sum_i hat(epsilon)_i^2$ is a scaled $chi^2_(N-k)$ random variable with mean $sigma^2$.
 Then,
 $
-  hat(beta) = (X^T X)^(-1)X^T y ~ 
+  (hat(beta)_1 slash sqrt(Var(hat(beta)_1))) /sqrt( hat(sigma)^2 slash sigma^2 )
 $
+is of the same form as #eref(<eq:t-dist-def>). 
+We can simplify by explicitly writing $Var(hat(beta)_1) = sigma^2 slash sum (x - xbar)^2$ so that we obtain
+$
+  (hat(beta)_1) / sqrt( hat(sigma)^2 slash sum_i (x_i - xbar)^2 ) med ,
+$
+which is the $hat(t)$-statistic.
+
+Significance testing is then done by finding the $p$-value of $hat(t)$.
+Let $F$ denote the cdf of the $t$ distribution with $N - k$ degrees of freedom. 
+Then $p = 1 - (F(hat(t)) - (F(-hat(t)))) = 2 (1 - F(hat(t)))$ for the two-tailed test, and $p = 1 - F(hat(t))$ for the one-tailed test (under the null hypothesis that $beta_1 <= 0$).
+
 
 
 == Multiple regressors 
