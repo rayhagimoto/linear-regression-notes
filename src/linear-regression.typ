@@ -225,10 +225,10 @@ Then,
 $
   (hat(beta)_1 slash sqrt(Var(hat(beta)_1))) /sqrt( hat(sigma)^2 slash sigma^2 )
 $
-is of the same form as #eref(<eq:t-dist-def>). 
-We can simplify by explicitly writing $Var(hat(beta)_1) = sigma^2 slash sum (x - xbar)^2$ so that we obtain
+is of the same form as #eref(<eq:t-dist-def>), so it is $t_(N - k)$-distributed. 
+Explicitly writing $Var(hat(beta)_1) = sigma^2 slash sum (x - xbar)^2$ we find
 $
-  (hat(beta)_1) / sqrt( hat(sigma)^2 slash sum_i (x_i - xbar)^2 ) med ,
+  (hat(beta)_1) / sqrt( hat(sigma)^2 slash sum_i (x_i - xbar)^2 ) ~ t_(N - k) med , 
 $
 which is the $hat(t)$-statistic.
 
@@ -236,7 +236,11 @@ Significance testing is then done by finding the $p$-value of $hat(t)$.
 Let $F$ denote the cdf of the $t$ distribution with $N - k$ degrees of freedom. 
 Then $p = 1 - (F(hat(t)) - (F(-hat(t)))) = 2 (1 - F(hat(t)))$ for the two-tailed test, and $p = 1 - F(hat(t))$ for the one-tailed test (under the null hypothesis that $beta_1 <= 0$).
 
-
+#red[
+  To-do:
+  - Wald test 
+  - F test
+]
 
 == Multiple regressors 
 <sec:multiple-regressors>

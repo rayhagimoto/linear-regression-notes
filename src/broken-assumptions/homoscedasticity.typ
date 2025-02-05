@@ -20,18 +20,18 @@ Moreover, the model is still linear, and $beta$ is unchanged.
 So if we do OLS estimation on the augmented data $(X_i slash sigma_i, y_i slash sigma_i)$ we no longer have problems with heteroscedasticity and can use the usual OLS estimator methods.
 In matrix form, let
 $
-  W equiv "diag"(1 slash sigma_i) in RR^(n times n) med .
+  W equiv "diag"(1 slash sigma_i^2) in RR^(n times n) med .
 $
 Then the weighted least squares estimator can be written
 
 #bluebox[
   _Weighted least squares (WLS) estimator:_
   $
-    hat(beta) = (X^T W^T W X)^(-1) X^T W^T (W y) med ,
+    hat(beta) = (X^T W X)^(-1) X^T W y med ,
   $
   where 
   $
-    W = "diag"(sigma_i^(-1)) med .
+    W = "diag"(sigma_i^(-2)) med .
   $
 ]
 
@@ -45,18 +45,39 @@ You could have $sigma^2 = sigma^2(X)$ without violating $EE[epsilon|X] = 0$.
 Consider the following setup:
 $
   x ~ U(1, 5) quad 
-  epsilon|x ~ "LogNorm"(0, 1 / 4 x^2) \
+  epsilon|x ~ "N"(0, 1 / 4 x^2) \
   y|x,epsilon = beta x + epsilon med .
 $
-That is, the error term is explicitly dependent on $x$. 
-In this model $EE[epsilon|x] = exp(1/4 x^2) != 0$ so weak exogeneity is also violated.
+That is, the error term has a variance that is explicitly dependent on $x$. 
+
+As an experiment, I generated $N_"samples" = 100$ data using this setup and estimated $beta$ using OLS and WLS regression. 
+For WLS regression I used weights $W = "diag"(1 slash x_i^2)$.
+I repeated this process $N_"sims" = 10,000$ times, storing the estimated $hat(beta)_"OLS"$ and $hat(beta)_"WLS"$ in each run. 
+@fig:ols-wls-beta-hist[Figure] shows the distribution of the estimates from OLS and WLS regression as blue and orange histograms, respectively. 
+The true $beta$ is plotted as a vertical dashed red line. 
+The OLS histogram is slightly broader than the WLS histogram, indicating that the WLS estimator is more efficient.
+Furthermore, both histograms have their mode close to the true value.
 
 #figure(
-  image("figs/homoscedasticity/beta-hist.svg")
-)
+  image("figs/homoscedasticity/beta-hist.svg", width:68%),
+  caption: [
+    Distribution of $hat(beta)$ obtained by performing OLS (blue) and WLS (orange) regression. 
+    The WLS histogram is slightly narrower, indicating that it is more efficient than the OLS estimator on the same size sample data.
+  ]
+) <fig:ols-wls-beta-hist>
+
+@fig:ols-wls-pred[Figure] shows an example of the predicted trend lines from OLS and WLS regression on a set of 100 points. 
+In this particular example I cherry-picked it so that the OLS estimator actually does a bit better because although the OLS estimator has higher variance it can sometimes beat the WLS estimator _by pure chance_. 
+The idea is that the WLS estimator is generally more reliable. 
+However, it is only more reliable if the weights we have chosen are good. 
+In this example we chose ideal weights that use the known $sigma^2(x) = 0.5 thin x^2$ relationship.
+
 #figure(
-  image("figs/homoscedasticity/trendlines.svg")
-)
+  image("figs/homoscedasticity/trendlines.svg", width:68%),
+  caption: [
+    Example of the 
+  ]
+) <fig:ols-wls-pred>
 
 
 
@@ -64,7 +85,5 @@ In this model $EE[epsilon|x] = exp(1/4 x^2) != 0$ so weak exogeneity is also vio
 
 #red[
   *Need to add:*
-  + Diagnosing heteroscedasticity (look at residuals vs predictions/vs each feature)
-  + Analytic example where $sigma^2(x) = beta x + alpha$
-  + Example where you fit $sigma^2$ with a model
+  + Show that the $hat(t)$ statistic is not $t$-distributed when conditional homoscedasticity is violated.
 ]
