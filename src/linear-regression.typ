@@ -98,7 +98,7 @@ $
 In #eref(<eq:beta-0-est>) I have introduced the estimators for standard error $S$ and correlation $rho$,
 $
   S_(x y)^2 &equiv 1 / (N-k) sum_i (x_i - xbar)(y_i - ybar) \ 
-  S_(x)^2 &equiv 1 / (N-p) sum_i (x_i - xbar)^2 \
+  S_(x)^2 &equiv 1 / (N-k) sum_i (x_i - xbar)^2 \
   rho_(x y) &equiv S_(x y)^2  / (S_x S_y) med , \
 
 $
