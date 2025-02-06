@@ -7,18 +7,35 @@ on:
 
 permissions:
   contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set PDF Filename
+        run: echo "PDF_NAME=$(echo '${{ github.event.repository.name }}' | sed 's/-notes//' | sed 's/-/_/g').pdf" >> $GITHUB_ENV
+
       - name: Compile Typst to PDF
         uses: rayhagimoto/compile-typst-action@v1
         with:
           source_paths: 'src/main.typ'
-          output_paths: 'linear-regression.pdf'
-      - name: Commit compiled PDFs
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: '[continuous deployment]: Compiled Typst to PDF'
+          output_paths: '${{ env.PDF_NAME }}'
+
+      - name: Deploy to gh-pages
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          # Switch to gh-pages branch (or create it if necessary)
+          git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
+          git rm -rf .  # Remove all existing files to avoid conflicts
+
+          # Add compiled PDF
+          git add "${{ env.PDF_NAME }}"
+
+          # Commit and force push
+          git commit -m "[continuous deployment]: Compiled Typst to PDF"
+          git push --force origin gh-pages
