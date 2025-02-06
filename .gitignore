@@ -3,3 +3,4 @@
 mismatch.png
 *.pdf
 *.pyc
+*/__pycache__/*
