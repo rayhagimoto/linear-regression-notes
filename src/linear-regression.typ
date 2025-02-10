@@ -204,7 +204,7 @@ First let's discuss the distribution from which $hat(beta)_1$ is drawn under the
 
 The $t$-distribution with $k$ degrees of freedom arises when you divide a standard normal random variable by a $chi^2_k$ random variable, normalised so its mean is 1. I.e.,
 $
-  Z ~ N(0, 1), quad X^2 ~ chi^2_k => Z / sqrt(X^2 slash k) ~ t_k med . #<eq:t-dist-def>
+  Z ~ N(0, 1), quad Q ~ chi^2_k => Z / sqrt(Q slash k) ~ t_k med . #<eq:t-dist-def>
 $
 
 Under the model given in #eref(<eq:reg-model>) we are assuming that the observed values of $y$ fluctuate around the 'true trend' $beta_1 x$ due to Gaussian noise
