@@ -96,11 +96,11 @@ So the log-likelihood is
 $
   ln cal(L(phi)) = - T / 2 ln (2 pi) - T / 2 ln sigma^2 - 1 / (2 sigma^2) sum_(t=1)^T [(1 - phi[L])r_t]^2 med .
 $
-Substituting $sigma^2$ and $phi$ with their MLEs $hat(sigma)^2 = "RSS" slash (T - p)$, and $hat(phi)$ yields
+Substituting $sigma^2$ and $phi$ with their MLEs $hat(sigma)^2 = "SSE" slash T$, and $hat(phi)$ yields
 $
   ln cal(L) 
   &= - T / 2 ln hat(sigma)^2 - 1 / (2 hat(sigma)^2) sum_(t=1)^T [(1 - hat(phi)[L])r_t]^2 med \
-  &= - T / 2 ln hat(sigma)^2 - 1 / (2 hat(sigma)^2) "RSS" med \
+  &= - T / 2 ln hat(sigma)^2 - 1 / (2 hat(sigma)^2) "SSE" med \
   &= - T / 2 ln hat(sigma)^2 - 1 / (2 hat(sigma)^2) [(T - ell) hat(sigma)^2] med \
   &= - T / 2 ln hat(sigma)^2 - 1 / (2) (T - ell) med .
 $
@@ -119,3 +119,5 @@ Hence,
     = (2p) / T + ln hat(sigma)^2 med .
   $
 ]
+
+#red[Note: here, I'm using SSE to mean "sum of squared errors" $= sum (y - "model")^2$]
