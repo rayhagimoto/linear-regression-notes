@@ -1,3 +1,2 @@
 from .homoscedasticity import HomoscedasticityStudy
-
-studies = [HomoscedasticityStudy]
+from .autocorrelation import AutocorrelationStudy

@@ -1,4 +1,4 @@
-from violations import HomoscedasticityStudy
+from violations import HomoscedasticityStudy, AutocorrelationStudy
 
 def render(s):
     "Wrapper that runs simulation and renders a plot"
@@ -9,7 +9,7 @@ def render(s):
 if __name__ == '__main__':
     
     studies = [
-        HomoscedasticityStudy,
+        AutocorrelationStudy,
     ]
 
     for study in studies:
