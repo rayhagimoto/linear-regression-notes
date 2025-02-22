@@ -184,12 +184,14 @@ The linear correlation between $x$ and $y$ is typically assessed via the $t$-sta
 #bluebox[
   $
     hat(t) = hat(beta)_1 / "StdErr"(hat(beta)_1) =  hat(beta)_1 / sqrt(hat(sigma)^2 slash S_x^2 ) med ,
-  $
+  $ <eq:t-statistic>
 ]
-where $hat(sigma)$ is the estimator for the standard deviation of the residuals and is given by
+where $hat(sigma)$ is the estimator for the standard deviation of the residuals and is given by,
+
 $
-  hat(sigma)^2 = 1 / (N-k) sum_i (y_i - hat(beta)_0 - hat(beta)_1 x_i )^2 med .
-$
+  hat(sigma)^2 = 1 / (N-k) sum_i (y_i - hat(beta)_0 - hat(beta)_1 x_i )^2 med . 
+$ <eq:ols-sigmahat>
+
 If the $epsilon_i$ are assumed to (1) be *Gaussian* with mean zero (2) have *no autocorrelation* (3) exhibit *weak exogeneity*, then the $t$-statistic follows a #box(fill:cyan)[$t$ distribution with $N - k$ degrees of freedom]. 
 This can be used to calculate $p$-values for significance testing.
 However, if any of these assumptions are violated you can't use the standard $p$-values. 

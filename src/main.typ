@@ -35,6 +35,7 @@
 #include "broken-assumptions/homoscedasticity.typ"
 #include "broken-assumptions/weak-exogeneity.typ"
 #include "broken-assumptions/multicollinearity.typ"
+#include "broken-assumptions/autocorrelation.typ"
 
 // Time series analysis
 #include "time-series-analysis/time-series.typ"

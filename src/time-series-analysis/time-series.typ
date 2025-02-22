@@ -18,33 +18,41 @@ The foundation of time series analysis is stationarity.
 Stationarity can be checked using the Dickey-Fuller (or augmented Dickey-Fuller) test.
 To explain this test let's look at a simple example of a linear time series.
 
-== AR(2) model
+== Autoregressive time series
+
+=== AR(1) model <sec:tsa-ar1>
+
+$
+  r_t = phi_0 + phi_1 r_(t-1) + u_t
+$
+
+=== AR(2) model
 
 The AR(2) model for $r_t$ is defined as
 $
-  r_t = phi_0 + phi_1 r_(t-1) + phi_2 r_(t-2) + epsilon_t med .
+  r_t = phi_0 + phi_1 r_(t-1) + phi_2 r_(t-2) + u_t med .
 $
 Assuming weak stationarity we can derive the mean $EE[r_t]$ as
 $
   EE[r_t] 
-  &= phi_0 + phi_1 EE[r_(t-1)] + phi_2 EE[r_(t-2)] + EE[epsilon_t] \
+  &= phi_0 + phi_1 EE[r_(t-1)] + phi_2 EE[r_(t-2)] + EE[u_t] \
   => mu &=  phi_0 + phi_1 mu + phi_2 mu \
   => mu &= phi_0 / (1 - phi_1 - phi_2) med .
 $
 Next we can compute its autocovariance and autocorrelation functions. 
 Rewriting the time series (in terms of deviations from the mean) we get
 $
-  r_t - mu = phi_1 (r_(t-1) - mu) + phi_2 (r_(t-2) - mu) + epsilon_t med .
+  r_t - mu = phi_1 (r_(t-1) - mu) + phi_2 (r_(t-2) - mu) + u_t med .
 $
 Now we multiply this by the lagged values on both sides:
 $
-  (r_(t - ell) - mu)(r_t - mu) = phi_1 (r_(t - ell)- mu)(r_(t-1) - mu) + phi_2 (r_(t - ell) - mu)(r_(t-2) - mu) + epsilon_t
+  (r_(t - ell) - mu)(r_t - mu) = phi_1 (r_(t - ell)- mu)(r_(t-1) - mu) + phi_2 (r_(t - ell) - mu)(r_(t-2) - mu) + u_t
 $
 Taking the expectation,
 $
   EE[(r_(t - ell) - mu)(r_t - mu)] 
   &= phi_1 EE[(r_(t - ell)- mu)(r_(t-1) - mu)] #no-num \
-  &quad + phi_2 EE[(r_(t - ell) - mu)(r_(t-2) - mu)] + EE[epsilon_t] #no-num \
+  &quad + phi_2 EE[(r_(t - ell) - mu)(r_(t-2) - mu)] + EE[u_t] #no-num \
 $
 Apply stationarity to the expectation values,
 $
@@ -75,7 +83,7 @@ Roots of this polynomial determine the asymptotic properties of the autocovarian
 The presence of a unit root implies $rho_ell$ grows exponentially with $ell$.
 
 
-== AR(p) model
+=== AR(p) model
 
 #bluebox[
   An $A R(p)$ time series is stationary _if and only if_ its characteristic equation 
