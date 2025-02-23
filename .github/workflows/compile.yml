@@ -19,7 +19,7 @@ jobs:
         run: echo "PDF_NAME=$(echo '${{ github.event.repository.name }}' | sed 's/-notes//' | sed 's/-/_/g').pdf" >> $GITHUB_ENV
 
       - name: Compile Typst to PDF
-        uses: rayhagimoto/compile-typst-action@v1
+        uses: rayhagimoto/compile-typst-action@v2
         with:
           source_paths: 'src/main.typ'
           output_paths: '${{ env.PDF_NAME }}'
