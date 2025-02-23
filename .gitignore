@@ -3,8 +3,82 @@
 mismatch.png
 *.pdf
 
-# Ignore Python cache files
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# Conda environment
+*.conda
+*.venv
+*.env
+*.pyenv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Package build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# PyCharm project files
+.idea/
+*.iml
+
+# VS Code settings
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# Logs and debugging
+logs/
+*.log
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+*.cover
+coverage.xml
+*.pytest_cache/
+
+# MyPy type check reports
+.mypy_cache/
+
+# SQLite database files
+*.sqlite3
+*.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Ignore dotenv environment files (if any)
+.env
+.env.local
+.env.*.local
+
+# Ignore Jupyter Notebook output images
+*.png
+*.svg
+*.jpeg
+*.jpg
