@@ -13,5 +13,3 @@ dependencies:
   - ipykernel
   - nbdime
   - tqdm
-variables:
-  PYTHONPATH: /home/ray/typst/finance/statistics/linear-regression-notes/scripts/case_studies/ols_violations
