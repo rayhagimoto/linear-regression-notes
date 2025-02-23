@@ -1,5 +1,5 @@
 .vscode/*
-*.ipynb
+# *.ipynb
 mismatch.png
 *.pdf
 

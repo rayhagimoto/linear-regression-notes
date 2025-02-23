@@ -10,5 +10,6 @@ dependencies:
   - scipy
   - jupyter
   - ipykernel
+  - nbdime
 variables:
   PYTHONPATH: "/home/ray/typst/linear-regression-notes/scripts/case_studies/ols_violations/ols_violations"
